@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slide_countdown/src/utils/utils.dart';
-import 'package:stream_duration/stream_duration.dart';
 
+import '../slide_countdown.dart';
 import 'default/default.dart';
 import 'utils/countdown_mixin.dart';
 import 'utils/duration_title.dart';

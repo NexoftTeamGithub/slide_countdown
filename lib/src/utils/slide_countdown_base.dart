@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stream_duration/stream_duration.dart';
 
-import 'duration_title.dart';
-import 'enum.dart';
+import '../../slide_countdown.dart';
 import 'utils.dart';
 
 abstract class SlideCountdownBase extends StatefulWidget {

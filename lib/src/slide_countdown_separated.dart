@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:slide_countdown/src/utils/slide_countdown_base.dart';
 import 'package:slide_countdown/src/utils/utils.dart';
-import 'package:stream_duration/stream_duration.dart';
+import '../slide_countdown.dart';
 import 'separated/separated.dart';
 
 import 'utils/countdown_mixin.dart';
-import 'utils/duration_title.dart';
-import 'utils/enum.dart';
 import 'utils/extensions.dart';
 import 'utils/notifiy_duration.dart';
 
