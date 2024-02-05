@@ -296,12 +296,12 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
   }
 
   int milliSecondsFirstDigit(Duration duration) {
-    if (duration.inMilliseconds <= 0) return 0;
+    if (duration.inSeconds <= 0) return 0;
     return ((duration.inMilliseconds % 1000) ~/ 100);
   }
 
   int milliSecondsSecondDigit(Duration duration) {
-    if (duration.inMilliseconds <= 0) return 0;
+    if (duration.inSeconds <= 0) return 0;
     return ((duration.inMilliseconds % 1000) % 100) ~/ 10;
   }
 
