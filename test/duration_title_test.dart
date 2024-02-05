@@ -53,6 +53,7 @@ void main() {
             hours: 'Uhr',
             minutes: 'Uhr',
             seconds: 'zweite',
+            milliSeconds: ''
           );
 
           expect('Tag', durationTitle.days);
@@ -69,7 +70,7 @@ void main() {
       'id',
       () {
         final id = DurationTitle(
-            days: 'hari', hours: 'jam', minutes: 'menit', seconds: 'detik');
+            days: 'hari', hours: 'jam', minutes: 'menit', seconds: 'detik',milliSeconds: '');
 
         expect(id == DurationTitle.id(), isTrue);
         expect(id.hashCode == DurationTitle.id().hashCode, isTrue);
@@ -79,7 +80,7 @@ void main() {
       'id short',
       () {
         final id =
-            DurationTitle(days: 'h', hours: 'j', minutes: 'm', seconds: 'd');
+            DurationTitle(days: 'h', hours: 'j', minutes: 'm', seconds: 'd',milliSeconds: '');
 
         expect(id == DurationTitle.idShort(), isTrue);
         expect(id.hashCode == DurationTitle.idShort().hashCode, isTrue);
@@ -93,7 +94,8 @@ void main() {
             days: 'days',
             hours: 'hours',
             minutes: 'minutes',
-            seconds: 'seconds');
+            seconds: 'seconds',
+            milliSeconds: '');
 
         expect(en == DurationTitle.en(), isTrue);
         expect(en.hashCode == DurationTitle.en().hashCode, isTrue);
@@ -103,7 +105,7 @@ void main() {
       'en short',
       () {
         final en =
-            DurationTitle(days: 'd', hours: 'h', minutes: 'm', seconds: 's');
+            DurationTitle(days: 'd', hours: 'h', minutes: 'm', seconds: 's',milliSeconds: '');
 
         expect(en == DurationTitle.enShort(), isTrue);
         expect(en.hashCode == DurationTitle.enShort().hashCode, isTrue);
