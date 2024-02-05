@@ -337,7 +337,7 @@ class _SlideCountdownSeparatedState extends State<SlideCountdownSeparated>
           textStyle: widget.textStyle,
           separatorStyle: widget.separatorStyle,
           initValue: 0,
-          slideDirection: widget.slideDirection,
+          slideDirection: SlideDirection.none,
           showZeroValue: widget.showZeroValue,
           curve: widget.curve,
           countUp: widget.countUp,
