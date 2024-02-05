@@ -34,6 +34,7 @@ abstract class SlideCountdownBase extends StatefulWidget {
     required this.shouldShowHours,
     required this.shouldShowMinutes,
     required this.shouldShowSeconds,
+    required this.shouldShowMilliSeconds,
     required this.countUpAtDuration,
   }) : assert(
           duration != null || streamDuration != null,
@@ -155,4 +156,11 @@ abstract class SlideCountdownBase extends StatefulWidget {
   /// if null and [showZeroValue] is false
   /// when duration in seconds is zero it will return false
   final ShouldShowItems? shouldShowSeconds;
+
+  /// This will trigger the minutes item will show or hide from the return value
+  /// You can also show or hide based on the remaining duration
+  /// e.g shouldShowMilliSeconds: () => remainingDuration.inMilliSeconds >= 1
+  /// if null and [showZeroValue] is false
+  /// when duration in seconds is zero it will return false
+  final ShouldShowItems? shouldShowMilliSeconds;
 }

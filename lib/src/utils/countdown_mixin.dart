@@ -32,10 +32,19 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
   /// Notifies the changes in the second digit of the seconds in the countdown.
   final ValueNotifier<int> secondsSecondDigitNotifier = ValueNotifier<int>(0);
 
+  /// Notifies the changes in the first digit of the seconds in the countdown.
+  final ValueNotifier<int> milliSecondsFirstDigitNotifier =
+      ValueNotifier<int>(0);
+
+  /// Notifies the changes in the second digit of the seconds in the countdown.
+  final ValueNotifier<int> milliSecondsSecondDigitNotifier =
+      ValueNotifier<int>(0);
+
   bool _updateDaysNotifier = true;
   bool _updateHoursNotifier = true;
   bool _updateMinutesNotifier = true;
   bool _updateSecondsNotifier = true;
+  bool _updateMilliSecondsNotifier = true;
 
   /// Update the flags that control the updates of each notifier.
   void updateConfigurationNotifier({
@@ -43,6 +52,7 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
     bool? updateHoursNotifier,
     bool? updateMinutesNotifier,
     bool? updateSecondsNotifier,
+    bool? updateMilliSecondsNotifier,
   }) {
     if (updateDaysNotifier != null &&
         updateDaysNotifier != _updateDaysNotifier) {
@@ -59,6 +69,10 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
     if (updateSecondsNotifier != null &&
         updateSecondsNotifier != _updateSecondsNotifier) {
       _updateSecondsNotifier = updateSecondsNotifier;
+    }
+    if (updateMilliSecondsNotifier != null &&
+        updateMilliSecondsNotifier != _updateMilliSecondsNotifier) {
+      _updateMilliSecondsNotifier = updateMilliSecondsNotifier;
     }
   }
 
@@ -153,6 +167,28 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
     }
   }
 
+  void _milliSecondsFirstDigitNotifier(Duration duration) {
+    try {
+      final int digit = milliSecondsFirstDigit(duration);
+      if (digit != milliSecondsFirstDigitNotifier.value) {
+        milliSecondsFirstDigitNotifier.value = digit;
+      }
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+  }
+
+  void _milliSecondsSecondDigitNotifier(Duration duration) {
+    try {
+      final int digit = milliSecondsSecondDigit(duration);
+      if (digit != milliSecondsSecondDigitNotifier.value) {
+        milliSecondsSecondDigitNotifier.value = digit;
+      }
+    } catch (ex) {
+      debugPrint(ex.toString());
+    }
+  }
+
   void disposeDaysNotifier() {
     daysFirstDigitNotifier.dispose();
     daysSecondDigitNotifier.dispose();
@@ -171,6 +207,11 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
   void disposeSecondsNotifier() {
     secondsFirstDigitNotifier.dispose();
     secondsSecondDigitNotifier.dispose();
+  }
+
+  void disposeMilliSecondsNotifier() {
+    milliSecondsFirstDigitNotifier.dispose();
+    milliSecondsSecondDigitNotifier.dispose();
   }
 
   void updateValue(Duration duration) {
@@ -202,6 +243,16 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
       _secondsFirstDigitNotifier(duration);
       _secondsSecondDigitNotifier(duration);
     }
+
+    // when the value of `_updateSecondsNotifier` is false
+    // there is no need to update the value in the milliSeconds notifier
+
+    if (_updateMilliSecondsNotifier) {
+      _milliSecondsFirstDigitNotifier(duration);
+      _milliSecondsSecondDigitNotifier(duration);
+    }
+
+
   }
 
   int daysFirstDigit(Duration duration) {
@@ -244,6 +295,16 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
     return (duration.inSeconds % 60) % 10;
   }
 
+  int milliSecondsFirstDigit(Duration duration) {
+    if (duration.inSeconds <= 0) return 0;
+    return (duration.inMilliseconds % 1000);
+  }
+
+  int milliSecondsSecondDigit(Duration duration) {
+    if (duration.inSeconds <= 0) return 0;
+    return duration.inSeconds % 1000;
+  }
+
   bool showWidget(int value, [bool force = false]) {
     if (force) return true;
     return value > 0;
@@ -255,6 +316,7 @@ mixin CountdownMixin<T extends StatefulWidget> on State<T> {
     disposeHoursNotifier();
     disposeMinutesNotifier();
     disposeSecondsNotifier();
+    disposeMilliSecondsNotifier();
     super.dispose();
   }
 }

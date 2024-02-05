@@ -54,6 +54,7 @@ class SlideCountdown extends SlideCountdownBase {
     super.shouldShowHours,
     super.shouldShowMinutes,
     super.shouldShowSeconds,
+    super.shouldShowMilliSeconds,
   });
 
   @override
@@ -89,6 +90,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
         oldWidget.shouldShowHours != widget.shouldShowHours ||
         oldWidget.shouldShowMinutes != widget.shouldShowMinutes ||
         oldWidget.shouldShowSeconds != widget.shouldShowSeconds ||
+        oldWidget.shouldShowMilliSeconds != widget.shouldShowMilliSeconds ||
         oldWidget.showZeroValue != widget.showZeroValue) {
       _updateConfigurationNotifier();
     }
@@ -132,6 +134,10 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
         remainingDuration.inMinutes < 1 && !widget.showZeroValue ? false : true;
     final defaultShowSeconds =
         remainingDuration.inSeconds < 1 && !widget.showZeroValue ? false : true;
+    final defaultShowMilliSeconds =
+        remainingDuration.inMilliseconds < 1 && !widget.showZeroValue
+            ? false
+            : true;
 
     /// cal func from CountdownMixin
     updateConfigurationNotifier(
@@ -147,6 +153,9 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
       updateSecondsNotifier: widget.shouldShowSeconds != null
           ? widget.shouldShowSeconds!(remainingDuration)
           : defaultShowSeconds,
+      updateMilliSecondsNotifier: widget.shouldShowMilliSeconds != null
+          ? widget.shouldShowMilliSeconds!(remainingDuration)
+          : defaultShowMilliSeconds,
     );
   }
 
@@ -188,6 +197,8 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
             duration.inMinutes < 1 && !widget.showZeroValue ? false : true;
         final defaultShowSeconds =
             duration.inSeconds < 1 && !widget.showZeroValue ? false : true;
+        final defaultShowMilliSeconds =
+            duration.inMilliseconds < 1 && !widget.showZeroValue ? false : true;
 
         final showDays = widget.shouldShowDays != null
             ? widget.shouldShowDays!(duration)
@@ -201,6 +212,9 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
         final showSeconds = widget.shouldShowSeconds != null
             ? widget.shouldShowSeconds!(duration)
             : defaultShowSeconds;
+        final showMilliSeconds = widget.shouldShowMilliSeconds != null
+            ? widget.shouldShowMilliSeconds!(duration)
+            : defaultShowMilliSeconds;
         final isSeparatorTitle = widget.separatorType == SeparatorType.title;
 
         final days = DigitItem(
@@ -218,7 +232,8 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           separatorPadding: widget.separatorPadding,
           textDirection: textDirection,
           digitsNumber: widget.digitsNumber,
-          showSeparator: (showHours || showMinutes || showSeconds) ||
+          showSeparator:
+              (showHours || showMinutes || showSeconds || showMilliSeconds) ||
               (isSeparatorTitle && showDays),
         );
 
@@ -238,7 +253,10 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           textDirection: textDirection,
           digitsNumber: widget.digitsNumber,
           showSeparator:
-              showMinutes || showSeconds || (isSeparatorTitle && showHours),
+              showMinutes ||
+              showSeconds ||
+              showMilliSeconds ||
+              (isSeparatorTitle && showHours),
         );
 
         final minutes = DigitItem(
@@ -256,7 +274,9 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           separatorPadding: widget.separatorPadding,
           textDirection: textDirection,
           digitsNumber: widget.digitsNumber,
-          showSeparator: showSeconds || (isSeparatorTitle && showMinutes),
+          showSeparator: showSeconds ||
+              showMilliSeconds ||
+              (isSeparatorTitle && showMinutes),
         );
 
         final seconds = DigitItem(
@@ -274,7 +294,25 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
           separatorPadding: widget.separatorPadding,
           textDirection: textDirection,
           digitsNumber: widget.digitsNumber,
-          showSeparator: isSeparatorTitle && showSeconds,
+          showSeparator: showMilliSeconds || isSeparatorTitle && showSeconds,
+        );
+
+        final milliSeconds = DigitItem(
+          firstDigit: milliSecondsFirstDigitNotifier,
+          secondDigit: milliSecondsSecondDigitNotifier,
+          textStyle: widget.textStyle,
+          separatorStyle: widget.separatorStyle,
+          slideDirection: widget.slideDirection,
+          curve: widget.curve,
+          countUp: widget.countUp,
+          slideAnimationDuration: widget.slideAnimationDuration,
+          separator: widget.separatorType == SeparatorType.title
+              ? durationTitle.seconds
+              : separator,
+          separatorPadding: widget.separatorPadding,
+          textDirection: textDirection,
+          digitsNumber: widget.digitsNumber,
+          showSeparator: isSeparatorTitle && showMilliSeconds,
         );
 
         final daysWidget = showDays ? days : const SizedBox.shrink();
@@ -285,6 +323,9 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
 
         final secondsWidget = showSeconds ? seconds : const SizedBox.shrink();
 
+        final milliSecondsWidget =
+            showMilliSeconds ? milliSeconds : const SizedBox.shrink();
+
         final countdown = Padding(
           padding: widget.padding,
           child: Row(
@@ -292,6 +333,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
             children: textDirection.isRtl
                 ? [
                     suffixIcon,
+                    milliSecondsWidget,
                     secondsWidget,
                     minutesWidget,
                     hoursWidget,
@@ -304,6 +346,7 @@ class _SlideCountdownState extends State<SlideCountdown> with CountdownMixin {
                     hoursWidget,
                     minutesWidget,
                     secondsWidget,
+                    milliSecondsWidget,
                     suffixIcon,
                   ],
           ),

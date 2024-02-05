@@ -7,12 +7,12 @@
 /// {@endtemplate}
 class DurationTitle {
   /// {@macro duration_title}
-  const DurationTitle({
-    required this.days,
-    required this.hours,
-    required this.minutes,
-    required this.seconds,
-  });
+  const DurationTitle(
+      {required this.days,
+      required this.hours,
+      required this.minutes,
+      required this.seconds,
+      required this.milliSeconds});
 
   /// The title for days
   final String days;
@@ -26,104 +26,84 @@ class DurationTitle {
   /// The title for seconds
   final String seconds;
 
+  /// The title for milliSeconds
+  final String milliSeconds;
+
   /// The copyWith method creates a new instance of the `DurationTitle`
   /// class with any of the values modified, if specified.
   /// If a value is not specified, the existing value from the current instance is used.
-  DurationTitle copyWith({
-    String? days,
-    String? hours,
-    String? minutes,
-    String? seconds,
-  }) =>
+  DurationTitle copyWith(
+          {String? days,
+          String? hours,
+          String? minutes,
+          String? seconds,
+          String? milliSeconds}) =>
       DurationTitle(
         days: days ?? this.days,
         hours: hours ?? this.hours,
         minutes: minutes ?? this.minutes,
         seconds: seconds ?? this.seconds,
+        milliSeconds: milliSeconds ?? this.milliSeconds,
       );
 
   factory DurationTitle.id() => const DurationTitle(
-        days: 'hari',
-        hours: 'jam',
-        minutes: 'menit',
-        seconds: 'detik',
-      );
+      days: 'hari',
+      hours: 'jam',
+      minutes: 'menit',
+      seconds: 'detik',
+      milliSeconds: '');
 
   factory DurationTitle.idShort() => const DurationTitle(
-        days: 'h',
-        hours: 'j',
-        minutes: 'm',
-        seconds: 'd',
-      );
+      days: 'h', hours: 'j', minutes: 'm', seconds: 'd', milliSeconds: '');
 
   factory DurationTitle.el() => const DurationTitle(
-        days: 'μέρες',
-        hours: 'ώρες',
-        minutes: 'λεπτά',
-        seconds: 'δευτερόλεπτα',
-      );
+      days: 'μέρες',
+      hours: 'ώρες',
+      minutes: 'λεπτά',
+      seconds: 'δευτερόλεπτα',
+      milliSeconds: '');
 
   factory DurationTitle.elShort() => const DurationTitle(
-        days: 'μ',
-        hours: 'ώ',
-        minutes: 'λ',
-        seconds: 'δ',
-      );
+      days: 'μ', hours: 'ώ', minutes: 'λ', seconds: 'δ', milliSeconds: '');
 
   factory DurationTitle.en() => const DurationTitle(
-        days: 'days',
-        hours: 'hours',
-        minutes: 'minutes',
-        seconds: 'seconds',
-      );
+      days: 'days',
+      hours: 'hours',
+      minutes: 'minutes',
+      seconds: 'seconds',
+      milliSeconds: '');
 
   factory DurationTitle.enShort() => const DurationTitle(
-        days: 'd',
-        hours: 'h',
-        minutes: 'm',
-        seconds: 's',
-      );
+      days: 'd', hours: 'h', minutes: 'm', seconds: 's', milliSeconds: '');
 
   factory DurationTitle.hy() => const DurationTitle(
-        days: 'օր',
-        hours: 'ժամ',
-        minutes: 'րոպե',
-        seconds: 'վարկյան',
-      );
+      days: 'օր',
+      hours: 'ժամ',
+      minutes: 'րոպե',
+      seconds: 'վարկյան',
+      milliSeconds: '');
 
   factory DurationTitle.hyShort() => const DurationTitle(
-        days: 'օ',
-        hours: 'ժ',
-        minutes: 'ր',
-        seconds: 'վ',
-      );
+      days: 'օ', hours: 'ժ', minutes: 'ր', seconds: 'վ', milliSeconds: '');
   factory DurationTitle.ru() => const DurationTitle(
-        days: 'дней',
-        hours: 'часов',
-        minutes: 'минут',
-        seconds: 'секунд',
-      );
+      days: 'дней',
+      hours: 'часов',
+      minutes: 'минут',
+      seconds: 'секунд',
+      milliSeconds: '');
 
   factory DurationTitle.ruShort() => const DurationTitle(
-        days: 'д',
-        hours: 'ч',
-        minutes: 'м',
-        seconds: 'с',
-      );
+      days: 'д', hours: 'ч', minutes: 'м', seconds: 'с', milliSeconds: '');
 
   factory DurationTitle.ar() => const DurationTitle(
-        days: 'أيام',
-        hours: 'ساعات',
-        minutes: 'دقائق',
-        seconds: 'ثواني',
-      );
+      days: 'أيام',
+      hours: 'ساعات',
+      minutes: 'دقائق',
+      seconds: 'ثواني',
+      milliSeconds: '');
 
   factory DurationTitle.arShort() => const DurationTitle(
-        days: 'ي',
-        hours: 'س',
-        minutes: 'د',
-        seconds: 'ث',
-      );
+      days: 'ي', hours: 'س', minutes: 'د', seconds: 'ث', milliSeconds: '');
 
   @override
   bool operator ==(covariant DurationTitle other) {
@@ -132,11 +112,16 @@ class DurationTitle {
     return other.days == days &&
         other.hours == hours &&
         other.minutes == minutes &&
-        other.seconds == seconds;
+        other.seconds == seconds &&
+        other.milliSeconds == milliSeconds;
   }
 
   @override
   int get hashCode {
-    return days.hashCode ^ hours.hashCode ^ minutes.hashCode ^ seconds.hashCode;
+    return days.hashCode ^
+        hours.hashCode ^
+        minutes.hashCode ^
+        seconds.hashCode ^
+        milliSeconds.hashCode;
   }
 }
